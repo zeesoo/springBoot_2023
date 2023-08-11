@@ -25,7 +25,10 @@
 			<tbody>
 				<tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
 					<td th:text="${list.boardIdx}"></td>
-					<td class="title" th:text="${list.title}"></td>
+					<td class="title">
+						<!--상세화면의 주소 호출 시 선택된 게시글 번호를 파라미터로 추가함-->
+						<a href="/board/openBoardDetail.do?boardIdx="th:attrappend="href=${list.boardIdx}" th:text="${list.title}"></a>
+					</td>
 					<td th:text="${list.hitCnt}"></td>
 					<td th:text="${list.createdDatetime}"></td>
 					<!--타임리프 date 객체는 자바 8에서 추가된 날짜 관련 클래스 (ex.LocalDateTime)를 처리할 수 없음

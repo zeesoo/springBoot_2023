@@ -8,6 +8,8 @@
 	<!-- resultType 명시할 때는 해당 클래스의 패키지를 포함하여 지정하여야 함
 		자주 사용하는 타입은 마이바티스에 지정되어 있어 그냥 사용해도 됨 (int, string, map, list 등) -->
 	<select id="selectBoardList" resultType="board.board.dto.BoardDto">
+		<!-- CDATA = Character DATA로 문자형 데이터를 말함. 내부의 문장은 파싱되지 않고 그대로 문자열로 출력됨
+			쿼리의 조건문 중 <, >, = 등의 기호가 파싱 중 태그로 인식되는 문제를 막을 수 있다. -->
 		<![CDATA[ 
 			SELECT
 				board_idx,
@@ -21,4 +23,49 @@
 			ORDER BY board_idx DESC
 		]]>
 	</select>
+	
+	<insert id="insertBoard" parameterType="board.board.dto.BoardDto">
+		<![CDATA[
+			INSERT INTO T_BOARD
+			(
+				BOARD_IDX,
+				TITLE,
+				CONTENTS,
+				CREATOR_ID,
+				CREATED_DATETIME
+			)
+			VALUES
+			(
+				BOARD_SEQ.NEXTVAL,
+				#{title},
+				#{contents},
+				'admin',
+				sysdate
+			)
+		]]>
+	</insert>
+	
+	<update id="updateHitCount" parameterType="int">
+		<![CDATA[
+			UPDATE
+				T_BOARD
+			SET
+				HIT_CNT = HIT_CNT + 1
+			WHERE
+				BOARD_IDX = #{boardIdx}
+		]]>
+	</update>
+	
+	<select id="selectBoardDetail" parameterType="int" resultType="board.board.dto.BoardDto">
+		<![CDATA[
+			SELECT
+				BOARD_IDX, TITLE, CONTENTS, HIT_CNT, CREATED_DATETIME, CREATOR_ID
+			FROM
+				T_BOARD
+			WHERE
+				BOARD_IDX = #{boardIdx} AND DELETED_YN = 'N'
+		]]>
+	</select>
+	
+	
 </mapper>
