@@ -1,0 +1,58 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.1.2'
+	id 'io.spring.dependency-management' version '1.1.2'
+}
+
+group = 'com.insight'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+//의존성 옵션
+dependencies {
+	//implementation: 내부적으로만 사용되고 사용자에게는 의존성을 노출시키지 않도록 선언 (의존 라이브러리 수정 시 본 모듈까지만 재빌드하며, 본 모듈을 의존하는 모듈은 해당 라이브러리의 api 사용 불가)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	/**
+	참고: spring boot와 mybatis 버전이 맞아야 함 (아래 조합으로만 가능)
+		- spring boot 3 (spring 6) + mybatis-spring 3
+		- spring boot 2 (spring 5) + mybatis-spring 2
+	**/
+	//implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+	compileOnly 'org.projectlombok:lombok' //compileOnly: compile 시에만 필요한 라이브러리. compile 시에만 빌드하고 빌드 결과물에는 포함하지 않음
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//상세 버전 지정하는 방법
+	//testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+	//testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
+	
+	//오라클 클라우드에 접속하기 위한 라이브러리
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8' //runtimeOnly: 런타임 시점에만 필요한 라이브러리
+	implementation 'com.oracle.database.security:osdt_cert'
+	implementation 'com.oracle.database.security:oraclepki'
+	implementation 'com.oracle.database.security:osdt_core'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

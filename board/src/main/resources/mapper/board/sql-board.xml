@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼의 namespace를 지정
+	매퍼와 XML 쿼리 매칭을 위해서는 매퍼 인터페이스의 경로와 메서드의 이름, 쿼리의 이름이 같아야 함 -->
+<mapper namespace="board.board.mapper.BoardMapper">
+	<!-- resultType 명시할 때는 해당 클래스의 패키지를 포함하여 지정하여야 함
+		자주 사용하는 타입은 마이바티스에 지정되어 있어 그냥 사용해도 됨 (int, string, map, list 등) -->
+	<select id="selectBoardList" resultType="board.board.dto.BoardDto">
+		<![CDATA[ 
+			SELECT
+				board_idx,
+				title,
+				hit_cnt,
+				created_datetime
+			FROM
+				t_board
+			WHERE
+				deleted_yn = 'N'
+			ORDER BY board_idx DESC
+		]]>
+	</select>
+</mapper>
