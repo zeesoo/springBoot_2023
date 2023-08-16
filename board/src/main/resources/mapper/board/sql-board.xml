@@ -67,5 +67,29 @@
 		]]>
 	</select>
 	
+	<update id="updateBoard" parameterType="board.board.dto.BoardDto">
+		<![CDATA[
+			UPDATE
+				T_BOARD
+			SET
+				TITLE=#{title},
+				CONTENTS = #{contents},
+				UPDATED_DATETIME = SYSDATE,
+				UPDATER_ID = 'admin'
+			WHERE BOARD_IDX = #{boardIdx}
+		]]>
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		<![CDATA[
+			UPDATE
+				T_BOARD
+			SET
+				DELETED_YN = 'Y',
+				UPDATED_DATETIME = SYSDATE,
+				UPDATER_ID = 'admin'
+			WHERE BOARD_IDX = #{boardIdx}
+		]]>
+	</update>
 	
 </mapper>

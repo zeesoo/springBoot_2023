@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration debug="true">
+	<!--  Appenders: 로그를 어디에 출력할지 결정
+		encoder: appender에 포함되어 출력할 로그를 지정한 형식으로 변환 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p [%c] %m%n</Pattern>
+		</encoder>   
+	</appender>
+	
+	<appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p %m%n</Pattern>
+		</encoder>   
+	</appender>
+	
+	<!-- logger: 로그를 출력. level 속성을 통해 출력할 로그의 레벨을 조절하여 appender에 전달
+		appender-ref: 로그를 출력하는 방식의 appender를 선택 -->
+	<logger name="board" level="DEBUG" appender-ref="console"/>
+	<logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog"/>
+	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog"/>
+	
+	<!-- root logger -->
+	<root level="error">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

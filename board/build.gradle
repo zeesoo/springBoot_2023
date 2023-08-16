@@ -51,6 +51,10 @@ dependencies {
 	implementation 'com.oracle.database.security:osdt_cert'
 	implementation 'com.oracle.database.security:oraclepki'
 	implementation 'com.oracle.database.security:osdt_core'
+	
+	//Log4JDBC: 로그가 정렬되어 출력되고 쿼리에 대한 추가적인 정보를 제공
+	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+	//implementation: 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 }
 
 tasks.named('test') {
