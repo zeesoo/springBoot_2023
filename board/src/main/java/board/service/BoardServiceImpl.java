@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService{
 
 	//필요한 의존 객체의 '타입'에 해당하는 빈을 찾아 주입

@@ -10,12 +10,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+//스프링에서 제공하는 어노테이션 기반 트랜잭션 활성화
+@EnableTransactionManagement
 public class DatabaseConfiguration {
 	
 	@Autowired
@@ -57,4 +62,9 @@ public class DatabaseConfiguration {
 		return new org.apache.ibatis.session.Configuration();
 	}
 	
+	//스프링이 제공하는 트랜잭션 매니저 등록
+	@Bean
+	public PlatformTransactionManager transactionManager() throws Exception {
+		return new DataSourceTransactionManager(dataSource());
+	}
 }
